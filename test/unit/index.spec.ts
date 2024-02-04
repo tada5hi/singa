@@ -1,4 +1,4 @@
-import { createSingleton } from '../../src';
+import { defineSingleton } from '../../src';
 
 class Foo {
 
@@ -6,41 +6,50 @@ class Foo {
 
 describe('src/index.ts', () => {
     it('should create singleton', () => {
-        const singleton = createSingleton({
-            create() {
+        const singleton = defineSingleton({
+            factory() {
                 return new Foo();
             },
         });
 
-        expect(singleton.isSet()).toBeFalsy();
+        expect(singleton.has()).toBeFalsy();
         expect(singleton.use()).toBeInstanceOf(Foo);
-        expect(singleton.isSet()).toBeTruthy();
+        expect(singleton.has()).toBeTruthy();
     });
 
     it('should set singleton', () => {
-        const singleton = createSingleton();
-        expect(singleton.isSet()).toBeFalsy();
+        const singleton = defineSingleton();
+        expect(singleton.has()).toBeFalsy();
         singleton.set(new Foo());
         expect(singleton.use()).toBeInstanceOf(Foo);
-        expect(singleton.isSet()).toBeTruthy();
+        expect(singleton.has()).toBeTruthy();
     });
 
     it('should reset singleton', () => {
-        const singleton = createSingleton({
-            create() {
+        const singleton = defineSingleton({
+            factory() {
                 return new Foo();
             },
         });
-        expect(singleton.isSet()).toBeFalsy();
+        expect(singleton.has()).toBeFalsy();
         expect(singleton.use()).toBeInstanceOf(Foo);
-        expect(singleton.isSet()).toBeTruthy();
+        expect(singleton.has()).toBeTruthy();
 
         singleton.reset();
-        expect(singleton.isSet()).toBeFalsy();
+        expect(singleton.has()).toBeFalsy();
+    });
+
+    it('should set factory', () => {
+        const singleton = defineSingleton();
+
+        expect(singleton.has()).toBeFalsy();
+        singleton.setFactory(() => new Foo());
+        expect(singleton.use()).toBeInstanceOf(Foo);
+        expect(singleton.has()).toBeTruthy();
     });
 
     it('should throw error', () => {
-        const singleton = createSingleton();
+        const singleton = defineSingleton();
 
         try {
             singleton.use();

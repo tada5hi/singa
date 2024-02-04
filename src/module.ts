@@ -1,7 +1,12 @@
-import type { Singleton, SingletonCreateContext } from './types';
+import type { Factory, Singleton, SingletonCreateContext } from './types';
 
-export function createSingleton<T = any>(context: SingletonCreateContext<T> = {}) : Singleton<T> {
+export function defineSingleton<T = any>(context: SingletonCreateContext<T> = {}) : Singleton<T> {
     let instance : T | undefined;
+
+    let factory : Factory<T> | undefined;
+    if (context.factory) {
+        factory = context.factory;
+    }
 
     return {
         use: () => {
@@ -9,8 +14,8 @@ export function createSingleton<T = any>(context: SingletonCreateContext<T> = {}
                 return instance;
             }
 
-            if (typeof context.create !== 'undefined') {
-                instance = context.create();
+            if (typeof factory !== 'undefined') {
+                instance = factory();
                 return instance;
             }
 
@@ -19,7 +24,10 @@ export function createSingleton<T = any>(context: SingletonCreateContext<T> = {}
         set: (input: T) => {
             instance = input;
         },
-        isSet: () => typeof instance !== 'undefined',
+        setFactory: (input: Factory<T>) => {
+            factory = input;
+        },
+        has: () => typeof instance !== 'undefined',
         reset: () => {
             instance = undefined;
         },

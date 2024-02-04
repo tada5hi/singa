@@ -23,12 +23,14 @@ npm install singa --save
 ## Usage
 
 ```typescript
+import { defineSingleton } from 'singa';
+
 class Foo {
 
 }
 
-const singleton = createSingleton({
-    create() {
+const singleton = defineSingleton({
+    factory() {
         return new Foo();
     },
 });

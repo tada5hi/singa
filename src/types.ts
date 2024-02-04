@@ -1,11 +1,14 @@
+export type Factory<T = any> = () => T;
+
 export type SingletonCreateContext<T> = {
-    create?: () => T,
+    factory?: Factory<T>,
     name?: string
 };
 
 export type Singleton<T> = {
     use: () => T,
     set: (instance: T) => void,
+    setFactory: (factory: Factory<T>) => void,
     reset: () => void,
-    isSet: () => boolean
+    has: () => boolean
 };

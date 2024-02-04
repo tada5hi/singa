@@ -6,11 +6,12 @@
 [![Known Vulnerabilities][snyk-src]][snyk-href]
 [![Conventional Commits][conventional-src]][conventional-href]
 
-This is a package to create and manage singleton instances.
+This is a tiny library to create and manage singleton instances.
 
 **Table of Contents**
 - [Installation](#installation)
 - [Usage](#usage)
+- [Types](#types)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -22,20 +23,60 @@ npm install singa --save
 
 ## Usage
 
+The **singa** function returns an object of type [Singa](#singa),
+with all input parameters, including name and factory, being entirely optional.
+
 ```typescript
-import { defineSingleton } from 'singa';
+import { singa } from 'singa';
 
 class Foo {
 
 }
 
-const singleton = defineSingleton({
+const singleton = singa({
+    name: 'singleton',
     factory() {
         return new Foo();
     },
 });
 
 const instance = singleton.use();
+```
+
+## Types
+
+### Singa
+```typescript
+declare type Singa<T> = {
+    /**
+     * Create or us existing singleton instance.
+     */
+    use: () => T,
+    /**
+     * Set the singleton instance.
+     *
+     * @param instance
+     */
+    set: (instance: T) => void,
+    /**
+     * Set factory fn for instance creation.
+     *
+     * @param factory
+     */
+    setFactory: (factory: Factory<T>) => void,
+    /**
+     * Reset the singleton instance.
+     */
+    reset: () => void,
+    /**
+     * Check if the singleton instance is set.
+     */
+    has: () => boolean,
+    /**
+     * Check if a factory fn is set.
+     */
+    hasFactory: () => boolean
+};
 ```
 
 ## Contributing

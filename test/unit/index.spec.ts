@@ -1,4 +1,4 @@
-import { defineSingleton } from '../../src';
+import { singa } from '../../src';
 
 class Foo {
 
@@ -6,7 +6,7 @@ class Foo {
 
 describe('src/index.ts', () => {
     it('should create singleton', () => {
-        const singleton = defineSingleton({
+        const singleton = singa({
             factory() {
                 return new Foo();
             },
@@ -18,7 +18,7 @@ describe('src/index.ts', () => {
     });
 
     it('should set singleton', () => {
-        const singleton = defineSingleton();
+        const singleton = singa();
         expect(singleton.has()).toBeFalsy();
         singleton.set(new Foo());
         expect(singleton.use()).toBeInstanceOf(Foo);
@@ -26,7 +26,7 @@ describe('src/index.ts', () => {
     });
 
     it('should reset singleton', () => {
-        const singleton = defineSingleton({
+        const singleton = singa({
             factory() {
                 return new Foo();
             },
@@ -40,7 +40,7 @@ describe('src/index.ts', () => {
     });
 
     it('should set factory', () => {
-        const singleton = defineSingleton();
+        const singleton = singa();
 
         expect(singleton.has()).toBeFalsy();
         singleton.setFactory(() => new Foo());
@@ -49,7 +49,7 @@ describe('src/index.ts', () => {
     });
 
     it('should throw error', () => {
-        const singleton = defineSingleton();
+        const singleton = singa();
 
         try {
             singleton.use();

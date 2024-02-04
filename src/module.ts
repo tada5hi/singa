@@ -1,6 +1,6 @@
-import type { Factory, Singleton, SingletonCreateContext } from './types';
+import type { Factory, Singa, SingaCreateContext } from './types';
 
-export function defineSingleton<T = any>(context: SingletonCreateContext<T> = {}) : Singleton<T> {
+export function singa<T = any>(context: SingaCreateContext<T> = {}) : Singa<T> {
     let instance : T | undefined;
 
     let factory : Factory<T> | undefined;
@@ -28,6 +28,7 @@ export function defineSingleton<T = any>(context: SingletonCreateContext<T> = {}
             factory = input;
         },
         has: () => typeof instance !== 'undefined',
+        hasFactory: () => typeof factory !== 'undefined',
         reset: () => {
             instance = undefined;
         },

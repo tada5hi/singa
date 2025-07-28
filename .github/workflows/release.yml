@@ -59,25 +59,6 @@ jobs:
                 env:
                     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-            -   name: CREATE CNAME
-                if: steps.release.outputs.releases_created == 'true'
-                run: |
-                    cd ./docs/.vitepress/dist/
-                    touch CNAME
-                    echo "rapiq.tada5hi.net" > CNAME
-
-            -   name: Build docs
-                if: steps.release.outputs.releases_created == 'true'
-                run: |
-                    npm run docs:build
-
-            -   name: Deploy docs
-                if: steps.release.outputs.releases_created == 'true'
-                uses: peaceiris/actions-gh-pages@v4
-                with:
-                    github_token: ${{ secrets.GITHUB_TOKEN }}
-                    publish_dir: ./docs/.vitepress/dist
-
             -   name: Create coverage
                 if: steps.release.outputs.releases_created == 'true'
                 run: |

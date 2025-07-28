@@ -48,6 +48,26 @@ describe('src/index.ts', () => {
         expect(singleton.has()).toBeTruthy();
     });
 
+    it('should get factory', () => {
+        const singleton = singa({
+            factory: () => new Foo(),
+        });
+
+        expect(singleton.hasFactory()).toBeTruthy();
+        expect(singleton.getFactory()).toBeDefined();
+    });
+
+    it('should unset factory', () => {
+        const singleton = singa({
+            factory: () => new Foo(),
+        });
+
+        singleton.unsetFactory();
+
+        expect(singleton.hasFactory()).toBeFalsy();
+        expect(singleton.getFactory()).toBeUndefined();
+    });
+
     it('should throw error', () => {
         const singleton = singa();
 

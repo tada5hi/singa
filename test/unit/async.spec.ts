@@ -26,6 +26,15 @@ describe('src/async', () => {
         const instance = await singleton.use();
         expect(instance).toBeInstanceOf(Foo);
 
+        const instanceB = await singleton.use();
+        expect(instance).toEqual(instanceB);
+
         expect(singleton.has()).toBeTruthy();
+    });
+
+    it('should throw error', async () => {
+        const singleton = singaAsync();
+
+        await expect(singleton.use()).rejects.toThrow();
     });
 });

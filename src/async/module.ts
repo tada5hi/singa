@@ -7,16 +7,27 @@
 
 import { SingaBase } from '../base';
 import type { FactoryAsync } from './types';
+import { DEFAULT_KEY } from '../constants';
 
 export class SingaAsync<T = any> extends SingaBase<FactoryAsync<T>> {
-    async use() : Promise<T> {
-        if (typeof this.instance !== 'undefined') {
-            return this.instance;
+    /**
+     * Create or use existing singleton instance.
+     *
+     * @param key
+     */
+    async use(key?: string) : Promise<T> {
+        const keyNormalized = key || DEFAULT_KEY;
+
+        let instance = this.instances.get(keyNormalized);
+        if (typeof instance !== 'undefined') {
+            return instance;
         }
 
         if (typeof this.options.factory !== 'undefined') {
-            this.instance = await this.options.factory();
-            return this.instance!;
+            instance = await this.options.factory();
+            this.instances.set(keyNormalized, instance);
+
+            return instance!;
         }
 
         throw new Error(`The ${this.options.name || 'singleton'} instance is not defined.`);

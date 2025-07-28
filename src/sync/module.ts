@@ -7,19 +7,25 @@
 
 import type { Factory } from './types';
 import { SingaBase } from '../base';
+import { DEFAULT_KEY } from '../constants';
 
 export class Singa<T = any> extends SingaBase<Factory<T>> {
     /**
-     * Create or us existing singleton instance.
+     * Create or use existing singleton instance.
      */
-    use() : T {
-        if (typeof this.instance !== 'undefined') {
-            return this.instance;
+    use(key?: string) : T {
+        const keyNormalized = key || DEFAULT_KEY;
+        let instance = this.instances.get(keyNormalized);
+
+        if (typeof instance !== 'undefined') {
+            return instance;
         }
 
         if (typeof this.options.factory !== 'undefined') {
-            this.instance = this.options.factory();
-            return this.instance!;
+            instance = this.options.factory();
+            this.instances.set(keyNormalized, instance);
+
+            return instance;
         }
 
         throw new Error(`The ${this.options.name || 'singleton'} instance is not defined.`);

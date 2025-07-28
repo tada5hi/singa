@@ -6,18 +6,20 @@
  */
 
 import type { FactoryInstance, Fn, SingaBaseOptions } from './types';
+import { DEFAULT_KEY } from './constants';
 
 export class SingaBase<
     FACTORY extends Fn = Fn,
 > {
     protected options: SingaBaseOptions<FACTORY>;
 
-    protected instance: FactoryInstance<FACTORY> | undefined;
+    protected instances: Map<string, FactoryInstance<FACTORY>>;
 
     // ----------------------------------------
 
     constructor(options: SingaBaseOptions<FACTORY>) {
         this.options = options;
+        this.instances = new Map<string, FactoryInstance<FACTORY>>();
     }
 
     // ----------------------------------------
@@ -26,23 +28,26 @@ export class SingaBase<
      * Set the singleton instance.
      *
      * @param instance
+     * @param key (default)
      */
-    set(instance: FactoryInstance<FACTORY>) {
-        this.instance = instance;
+    set(instance: FactoryInstance<FACTORY>, key?: string) {
+        this.instances.set(key || DEFAULT_KEY, instance);
     }
 
     /**
      * Check if the singleton instance is set.
+     *
+     * @param key
      */
-    has() {
-        return typeof this.instance !== 'undefined';
+    has(key?: string) {
+        return this.instances.has(key || DEFAULT_KEY);
     }
 
     /**
      * Unset the singleton instance.
      */
-    unset() {
-        this.instance = undefined;
+    unset(key?: string) {
+        this.instances.delete(key || DEFAULT_KEY);
     }
 
     // ----------------------------------------

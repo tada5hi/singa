@@ -5,43 +5,29 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
-import type { Factory, SingaCreateContext } from './types';
+import type { FactoryInstance, Fn, SingaBaseOptions } from './types';
 
-export class Singa<T = any> {
-    protected options: SingaCreateContext<T>;
+export class SingaBase<
+    FACTORY extends Fn = Fn,
+> {
+    protected options: SingaBaseOptions<FACTORY>;
 
-    protected instance: T | undefined;
+    protected instance: FactoryInstance<FACTORY> | undefined;
 
     // ----------------------------------------
 
-    constructor(options: SingaCreateContext<T>) {
+    constructor(options: SingaBaseOptions<FACTORY>) {
         this.options = options;
     }
 
     // ----------------------------------------
 
     /**
-     * Create or us existing singleton instance.
-     */
-    use() {
-        if (typeof this.instance !== 'undefined') {
-            return this.instance;
-        }
-
-        if (typeof this.options.factory !== 'undefined') {
-            this.instance = this.options.factory();
-            return this.instance;
-        }
-
-        throw new Error(`The ${this.options.name || 'singleton'} instance is not defined.`);
-    }
-
-    /**
      * Set the singleton instance.
      *
      * @param instance
      */
-    set(instance: T) {
+    set(instance: FactoryInstance<FACTORY>) {
         this.instance = instance;
     }
 
@@ -73,7 +59,7 @@ export class Singa<T = any> {
      *
      * @param factory
      */
-    setFactory(factory: Factory<T>) {
+    setFactory(factory: FACTORY) {
         this.options.factory = factory;
     }
 

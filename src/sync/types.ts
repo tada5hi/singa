@@ -5,6 +5,7 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
-export * from './async';
-export * from './sync';
-export * from './types';
+import type { SingaBaseOptions } from '../types';
+
+export type Factory<T = any> = () => T;
+export type SingaOptions<T> = SingaBaseOptions<Factory<T>>;

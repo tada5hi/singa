@@ -5,6 +5,9 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
-export * from './async';
-export * from './sync';
-export * from './types';
+import type { SingaOptions } from './types';
+import { Singa } from './module';
+
+export function singa<T = any>(options: SingaOptions<T> = {}) : Singa<T> {
+    return new Singa(options);
+}

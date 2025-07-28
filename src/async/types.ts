@@ -5,6 +5,8 @@
  *  view the LICENSE file that was distributed with this source code.
  */
 
-export * from './async';
-export * from './sync';
-export * from './types';
+import type { SingaBaseOptions } from '../types';
+
+export type FactoryAsync<T = any> = () => T | Promise<T>;
+
+export type SingaAsyncOptions<T = any> = SingaBaseOptions<FactoryAsync<T>>;

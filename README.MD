@@ -11,7 +11,6 @@ This is a tiny library to create and manage singleton instances.
 **Table of Contents**
 - [Installation](#installation)
 - [Usage](#usage)
-- [Types](#types)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -26,6 +25,7 @@ npm install singa --save
 The **singa** function returns an object of type [Singa](#singa),
 with all input parameters, including name and factory, being entirely optional.
 
+**Sync**
 ```typescript
 import { singa } from 'singa';
 
@@ -43,40 +43,23 @@ const singleton = singa({
 const instance = singleton.use();
 ```
 
-## Types
-
-### Singa
+**Async**
 ```typescript
-declare type Singa<T> = {
-    /**
-     * Create or us existing singleton instance.
-     */
-    use: () => T,
-    /**
-     * Set the singleton instance.
-     *
-     * @param instance
-     */
-    set: (instance: T) => void,
-    /**
-     * Set factory fn for instance creation.
-     *
-     * @param factory
-     */
-    setFactory: (factory: Factory<T>) => void,
-    /**
-     * Reset the singleton instance.
-     */
-    reset: () => void,
-    /**
-     * Check if the singleton instance is set.
-     */
-    has: () => boolean,
-    /**
-     * Check if a factory fn is set.
-     */
-    hasFactory: () => boolean
-};
+import { singaAsync } from 'singa';
+
+class Foo {
+
+}
+
+const singleton = singaAsync({
+    name: 'singleton',
+    async factory() {
+        await Promise.resolve();
+        return new Foo();
+    },
+});
+
+const instance = await singleton.use();
 ```
 
 ## Contributing

@@ -35,7 +35,7 @@ describe('src/index.ts', () => {
         expect(singleton.use()).toBeInstanceOf(Foo);
         expect(singleton.has()).toBeTruthy();
 
-        singleton.reset();
+        singleton.unset();
         expect(singleton.has()).toBeFalsy();
     });
 

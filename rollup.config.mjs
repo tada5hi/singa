@@ -1,6 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve';
-import swc from "@rollup/plugin-swc";
-import pkg from './package.json' assert {type: 'json'};
+import swc from '@rollup/plugin-swc';
+import pkg from './package.json' with {type: 'json'};
 
 const extensions = [
     '.cjs',
@@ -21,20 +21,20 @@ export default [
             ...Object.keys(pkg.peerDependencies || {}),
         ],
         plugins: [
-            resolve({ extensions}),
+            resolve({ extensions }),
 
-            swc()
+            swc(),
         ],
         output: [
             {
                 file: pkg.main,
                 format: 'cjs',
-                sourcemap: true
+                sourcemap: true,
             }, {
                 file: pkg.module,
                 format: 'esm',
-                sourcemap: true
-            }
-        ]
-    }
+                sourcemap: true,
+            },
+        ],
+    },
 ];

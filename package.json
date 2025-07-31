@@ -55,8 +55,8 @@
         "jest": "^30.0.5",
         "lint-staged": "^16.1.2",
         "rimraf": "^6.0.1",
-        "rollup": "^4.46.1",
-        "typescript": "^5.8.3",
+        "rollup": "^4.46.2",
+        "typescript": "^5.9.2",
         "workspaces-publish": "^1.4.5"
     },
     "lint-staged": {

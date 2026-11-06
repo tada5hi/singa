@@ -61,5 +61,12 @@
     "lint-staged": {
         ".js": "npm run lint:fix",
         "*.ts": "npm run lint:fix"
+    },
+    "devEngines": {
+        "runtime": {
+            "name": "node",
+            "version": "^24.15.0 || >=26.0.0",
+            "onFail": "warn"
+        }
     }
 }

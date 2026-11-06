@@ -19,6 +19,7 @@ export class SingaAsync<T = any> extends SingaBase<FactoryAsync<T>> {
         const keyNormalized = key || DEFAULT_KEY;
 
         let instance = this.instances.get(keyNormalized);
+
         if (typeof instance !== 'undefined') {
             return instance;
         }

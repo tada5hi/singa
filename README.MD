@@ -25,6 +25,20 @@ Singa use returns a defined cached instance; on a miss it calls the factory and 
 
 <img src=".github/assets/mechanism.svg" width="960" alt="Singa use returns a defined cached instance; on a miss it calls the factory and stores the result. SingaAsync stores only after the factory resolves, so concurrent misses are not deduplicated." />
 
+**Table of Contents**
+
+- [Why singa?](#why-singa)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Sync](#sync)
+  - [Async](#async)
+  - [Explicit instances and missing factories](#explicit-instances-and-missing-factories)
+- [Lifecycle](#lifecycle)
+- [API](#api)
+- [Notes](#notes)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Installation
 
 ```bash
@@ -47,6 +61,56 @@ const remote = singaAsync({ factory: async () => ({ connected: true }) });
 const first = await remote.use('primary');
 console.log(first === await remote.use('primary')); // true
 ```
+
+### Sync
+
+`singa(options)` returns a `Singa` holder. Both `name` and `factory` are optional; omit the factory when you intend to supply an instance through `set` before calling `use`.
+
+```typescript
+import { singa } from 'singa';
+
+class Service {}
+const singleton = singa({ name: 'service', factory: () => new Service() });
+const instance = singleton.use();
+console.log(instance instanceof Service); // true
+```
+
+### Async
+
+`singaAsync(options)` returns a `SingaAsync` holder. Its factory may return an instance directly or a promise. `use` always returns a promise; await it to obtain the resolved instance.
+
+```typescript
+import { singaAsync } from 'singa';
+
+class Service {}
+const singleton = singaAsync({
+    name: 'service',
+    async factory() {
+        await Promise.resolve();
+        return new Service();
+    },
+});
+const instance = await singleton.use();
+console.log(instance instanceof Service); // true
+```
+
+### Explicit instances and missing factories
+
+```typescript
+import { singa } from 'singa';
+
+const singleton = singa<{ ready: boolean }>({ name: 'service' });
+singleton.set({ ready: true });
+console.log(singleton.use().ready); // true
+singleton.unset();
+try {
+    singleton.use();
+} catch (error) {
+    console.log((error as Error).message); // The service instance is not defined.
+}
+```
+
+A missing factory and missing instance cause a synchronous throw from `Singa.use` or a rejected promise from `SingaAsync.use`. Factory exceptions propagate without being replaced. `name` changes only the missing-instance message.
 
 ## Lifecycle
 

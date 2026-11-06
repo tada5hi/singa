@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="singa-a-title singa-a-desc">
+<title id="singa-a-title">singa — The one instance</title>
+<desc id="singa-a-desc">One luminous instance stands on a permanent pedestal; three access marks approach the same object.</desc>
+<style>
+:root{--accent:#bc9538;--second:#678792;--ink:#253447;--paper:#f7fafc;--line:#8394a7;--wash:#bc953818}
+@media(prefers-color-scheme:dark){:root{--ink:#e4ebf3;--paper:#182332;--line:#8495aa;--wash:#bc953822}}
+.a{stroke:var(--accent)}.b{stroke:var(--second)}.af{fill:var(--accent)}.bf{fill:var(--second)}.ink{fill:var(--ink)}.paper{stroke:var(--line)}.line{stroke:var(--line)}.wash{fill:var(--wash)}.white{fill:#fff}.neutral{fill:var(--paper)}
+</style>
+<path d="M51 201 H205 M66 183 H190 M82 165 H174" class="b" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M128 51 L168 74 V120 L128 143 L88 120 V74 Z" class="a" stroke-width="6" fill="var(--wash)" stroke-linecap="round" stroke-linejoin="round" /><path d="M128 51 V97 L168 74 M128 97 L88 74 M128 97 V143" class="a" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M35 93 H68 M188 93 H221 M128 19 V35" class="b" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><circle cx="35" cy="93" r="7" class="bf" /><circle cx="221" cy="93" r="7" class="bf" /><circle cx="128" cy="19" r="6" class="bf" />
+</svg>

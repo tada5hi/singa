@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/tada5hi/singa/compare/v1.1.0...v1.1.1) (2026-11-06)
+
+
+### Bug Fixes
+
+* include readme image assets in package ([#108](https://github.com/tada5hi/singa/issues/108)) ([b1b55b6](https://github.com/tada5hi/singa/commit/b1b55b6188a8d0acf54bb4f3fb60929e570dd334))
+
 ## [1.1.0](https://github.com/tada5hi/singa/compare/v1.0.0...v1.1.0) (2025-07-28)
 
 

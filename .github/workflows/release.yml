@@ -8,7 +8,7 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 env:
-    NODE_VERSION: 22
+    NODE_VERSION: 24.11.0
 
 permissions:
     issues: write
@@ -26,14 +26,14 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            -   uses: google-github-actions/release-please-action@v4
+            -   uses: googleapis/release-please-action@v5
                 id: release
                 with:
                     token: ${{ secrets.GITHUB_TOKEN }}
 
             -   name: Checkout
                 if: steps.release.outputs.releases_created == 'true'
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
                 with:
                     fetch-depth: 0
 
@@ -55,7 +55,7 @@ jobs:
 
             -   name: Publish
                 if: steps.release.outputs.releases_created == 'true'
-                run: npx workspaces-publish
+                run: npx monoship
                 env:
                     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
